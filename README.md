@@ -40,7 +40,6 @@ python train.py --hps ffhq1024
 # Known differences from the orignal
  - Instead of using the PyTorch default layer initializers we use
    the Flax defaults.
- - We haven't yet implemented support for the 'low_bit' hyperparameter.
  - Renamed rate/distortion to kl/loglikelihood.
  - In multihost configurations, checkpoints are saved to disk on all hosts.
  - Slight changes to DMOL loss.
