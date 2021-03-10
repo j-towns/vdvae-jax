@@ -3,7 +3,7 @@ Implementation of the experiments in the paper [_Very Deep VAEs Generalize Autor
 
 I have tried to keep this implementation as close as possible to the original. I was able to re-use a large proportion of the code, including the data input pipeline, which still uses PyTorch. I recommend installing a CPU-only version of PyTorch for this.
 
-Tested with JAX 0.2.10, Flax 0.3.0, PyTorch 1.7.1, NumPy 1.19.2.
+Tested with JAX 0.2.10, Flax 0.3.0, PyTorch 1.7.1, NumPy 1.19.2. I also ran training to convergence on cifar10 and reproduced the test ELBO value of 2.87 from the paper, using `--conv_precision=highest`, see below. If anyone asks for trained checkpoints for cifar I will be happy to upload them.
 
 From the paper, some model samples and a visualization of how it generates them:
 
@@ -47,3 +47,8 @@ python train.py --hps ffhq1024
 
 # Things to be careful of
 We tried to keep this implementation as close as possible to the author's [original Pytorch implementation](https://github.com/openai/vdvae). There are two potentially confusing things which we chose to preserve. Firstly, the `--n_batch` command line argument specifies the _per device_ batch size; on configurations with multiple GPUs/TPUs and multiple hosts this needs to be taken into account when comparing runs on different configurations. Secondly, some of the default hyperparameter settings in `hps.py` do not match the settings used for the paper's experiments, which are specified on page 15 of the paper.
+
+In order to reproduce results from the paper on TPU, it may be necessary to set `--conv_precision=highest`, which simulates GPU-like float32 precision on the TPU. Note that this can result in slower runtime. In my experiments on cifar10 I've found that this setting has about a 1% effect on the final ELBO value and was necessary to reproduce the value 2.87 reported in the paper. 
+
+# Acknowledgements
+This code is very closely based on [Rewon Child](https://github.com/rewonc)'s implementation, thanks to him for writing that. Thanks to [Julius Kunze](https://github.com/JuliusKunze) for tidying the code and fixing some bugs.
