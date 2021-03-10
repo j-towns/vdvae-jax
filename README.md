@@ -6,6 +6,7 @@ I have tried to keep this implementation as close as possible to the original. I
 Tested with JAX 0.2.10, Flax 0.3.0, PyTorch 1.7.1, NumPy 1.19.2.
 
 From the paper, some model samples and a visualization of how it generates them:
+
 ![image](header-image.png)
 
 # Setup
@@ -33,6 +34,9 @@ python train.py --hps ffhq256
 python train.py --hps ffhq1024
 ```
 
+# TODOs
+- Implement support for 5 bit images which was used in the paper's FFHQ-256 experiments. 
+
 # Known differences from the orignal
  - Instead of using the PyTorch default layer initializers we use
    the Flax defaults.
@@ -40,3 +44,6 @@ python train.py --hps ffhq1024
  - Renamed rate/distortion to kl/loglikelihood.
  - In multihost configurations, checkpoints are saved to disk on all hosts.
  - Slight changes to DMOL loss.
+
+# Things to be careful of
+We tried to keep this implementation as close as possible to the author's [original Pytorch implementation](https://github.com/openai/vdvae). There are two potentially confusing things which we chose to preserve. Firstly, the `--n_batch` command line argument specifies the _per device_ batch size; on configurations with multiple GPUs/TPUs and multiple hosts this needs to be taken into account when comparing runs on different configurations. Secondly, some of the default hyperparameter settings in `hps.py` do not match the settings used for the paper's experiments, which are specified on page 15 of the paper.
