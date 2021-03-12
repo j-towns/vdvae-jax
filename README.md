@@ -47,7 +47,9 @@ python train.py --hps ffhq1024
 # Things to watch out for
 We tried to keep this implementation as close as possible to the author's [original Pytorch implementation](https://github.com/openai/vdvae). There are two potentially confusing things which we chose to preserve. Firstly, the `--n_batch` command line argument specifies the _per device_ batch size; on configurations with multiple GPUs/TPUs and multiple hosts this needs to be taken into account when comparing runs on different configurations. Secondly, some of the default hyperparameter settings in `hps.py` do not match the settings used for the paper's experiments, which are specified on page 15 of the paper.
 
-In order to reproduce results from the paper on TPU, it may be necessary to set `--conv_precision=highest`, which simulates GPU-like float32 precision on the TPU. Note that this can result in slower runtime. In my experiments on cifar10 I've found that this setting has about a 1% effect on the final ELBO value and was necessary to reproduce the value 2.87 reported in the paper. 
+In order to reproduce results from the paper on TPU, it may be necessary to set `--conv_precision=highest`, which simulates GPU-like float32 precision on the TPU. Note that this can result in slower runtime. In my experiments on cifar10 I've found that this setting has about a 1% effect on the final ELBO value and was necessary to reproduce the value 2.87 reported in the paper.
+
+Finally, we found it necessary to raise the `--skip_threshold` parameter to avoid training occasionally getting stuck, due to consistently large magnitude gradients. The default value for cifar10 is 400, raising it to 1000 seems to solve any stuck training issues.
 
 # Acknowledgements
 This code is very closely based on [Rewon Child](https://github.com/rewonc)'s implementation, thanks to him for writing that. Thanks to [Julius Kunze](https://github.com/JuliusKunze) for tidying the code and fixing some bugs.
