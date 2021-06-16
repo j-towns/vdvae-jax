@@ -3,7 +3,7 @@ Implementation of the experiments in the paper [_Very Deep VAEs Generalize Autor
 
 I have tried to keep this implementation as close as possible to the original. I was able to re-use a large proportion of the code, including the data input pipeline, which still uses PyTorch. I recommend installing a CPU-only version of PyTorch for this.
 
-Tested with JAX 0.2.10, Flax 0.3.0, PyTorch 1.7.1, NumPy 1.19.2. I also ran training to convergence on cifar10 and reproduced the test ELBO value of 2.87 from the paper, using `--conv_precision=highest`, see below. If anyone asks for trained checkpoints for cifar I will be happy to upload them.
+Tested with JAX 0.2.10, Flax 0.3.0, PyTorch 1.7.1, NumPy 1.19.2. I also ran training to convergence on cifar10 on cloud TPU, and reproduced the test ELBO value of 2.87 from the paper, using `--conv_precision=highest`, see below. If anyone asks for trained checkpoints for cifar I will be happy to upload them.
 
 From the paper, some model samples and a visualization of how it generates them:
 
